@@ -2,7 +2,11 @@
 
 namespace App\Http\Requests;
 
+use App\Models\AreaGroup;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Contracts\Validation\Validator;
 
 class UpdateAreaGroupRequest extends FormRequest
 {
@@ -11,7 +15,7 @@ class UpdateAreaGroupRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -21,8 +25,29 @@ class UpdateAreaGroupRequest extends FormRequest
      */
     public function rules(): array
     {
+        
         return [
-            //
+            'name' => ['required', Rule::unique('area_groups','name')->ignore($this->id)],
+            'lat' => 'nullable',
+            'long' => 'nullable'
         ];
     }
+
+    public function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(response()->json([
+            'success'   => false,
+            'message'   => 'Validation errors',
+            'data'      => $validator->errors()
+        ]));
+    }
+
+    public function messages()
+    {
+        return [
+            'name.required' => 'nama area tidak boleh kosong',
+            'name.unique' => 'area sudah terdaftar',
+        ];
+    }
+
 }

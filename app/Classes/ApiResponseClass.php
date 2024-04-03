@@ -23,7 +23,7 @@ class ApiResponseClass
             'data'    => $result
         ];
         if(!empty($message)){
-            $response['message'] =$message;
+            $response['message'] = $message;
         }
         return response()->json($response, $code);
     }

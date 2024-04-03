@@ -24,7 +24,7 @@ class StoreAreaGroupRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required',
+            'name' => ['required','unique:area_groups'],
             'lat' => 'nullable',
             'long' => 'nullable'
         ];
@@ -37,5 +37,13 @@ class StoreAreaGroupRequest extends FormRequest
             'message'   => 'Validation errors',
             'data'      => $validator->errors()
         ]));
+    }
+
+    public function messages()
+    {
+        return [
+            'name.required' => 'nama area tidak boleh kosong',
+            'name.unique' => 'area sudah terdaftar',
+        ];
     }
 }

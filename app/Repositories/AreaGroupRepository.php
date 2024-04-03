@@ -27,7 +27,9 @@ class AreaGroupRepository implements AreaGroupRepositoryInterface
     }
 
     public function update(array $data,$id){
-       return AreaGroup::whereId($id)->update($data);
+       $get = AreaGroup::where('id' ,$id)->first();
+       $get->update($data);
+       return $get;
     }
     
     public function delete($id){

@@ -60,9 +60,9 @@ class AreaGroupController extends Controller
      */
     public function show($id)
     {
-        $product = $this->areaGroupRepositoryInterface->getById($id);
+        $area = $this->areaGroupRepositoryInterface->getById($id);
 
-        return ApiResponseClass::sendResponse(new AreaGroupResource($product),'',200);
+        return ApiResponseClass::sendResponse(new AreaGroupResource($area),'',200);
     }
 
     /**
@@ -76,18 +76,18 @@ class AreaGroupController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateAreaGroupRequest $request, $id)
+    public function update(int $id, UpdateAreaGroupRequest $request)
     {
         $updateData = $request->validated();
         DB::beginTransaction();
         try{
-             $product = $this->areaGroupRepositoryInterface->update($updateData,$id);
+             $area= $this->areaGroupRepositoryInterface->update($updateData,$id);
 
              DB::commit();
-             return ApiResponseClass::sendResponse('Area Group Update Successful','',201);
+             return ApiResponseClass::sendResponse(new AreaGroupResource($area),'Area Group Update Successful',201);
 
         }catch(\Exception $ex){
-            return ApiResponseClass::rollback($ex);
+            dd($ex);
         }
     }
 
@@ -97,7 +97,6 @@ class AreaGroupController extends Controller
     public function destroy($id)
     {
          $this->areaGroupRepositoryInterface->delete($id);
-
-        return ApiResponseClass::sendResponse('Area Group Delete Successful','',204);
+         return ApiResponseClass::sendResponse('Area Group Delete Successful','',204);
     }
 }

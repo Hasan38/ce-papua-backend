@@ -8,4 +8,5 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-Route::apiResource('/area-group',AreaGroupController::class);
+Route::post('/area-group',[AreaGroupController::class,'store']);
+Route::put('/area-group/{id}',[AreaGroupController::class,'update'])->where('id','[0-9]+');
