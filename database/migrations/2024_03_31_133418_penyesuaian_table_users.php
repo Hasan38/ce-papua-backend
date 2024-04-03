@@ -11,7 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        //
+        Schema::table('users', function (Blueprint $table) {
+            $table->unsignedBigInteger("area_id")->nullable(false);
+            $table->string("nik")->unique();
+            $table->text("address")->nullable();
+            $table->string("phone")->nullable();
+            $table->string("avatar")->nullable();
+            $table->enum("status", [1, 0]);
+            $table->foreign("area_id")->on("area_groups")->references("id");
+        });
     }
 
     /**
@@ -19,6 +27,12 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn("nik");
+            $table->dropColumn("address");
+            $table->dropColumn("phone");
+            $table->dropColumn("avatar");
+            $table->dropColumn("status");
+        });
     }
 };
