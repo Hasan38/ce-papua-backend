@@ -8,14 +8,13 @@ use App\Http\Requests\UpdateAreaGroupRequest;
 use App\Http\Resources\AreaGroupResource;
 use App\Interfaces\AreaGroupRepositoryInterface;
 use App\Models\AreaGroup;
-use App\Repositories\AreaGroupRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class AreaGroupController extends Controller
 {
     private AreaGroupRepositoryInterface $areaGroupRepositoryInterface;
-    private AreaGroupRepository $areaGroupRepository;
+
     
     public function __construct(AreaGroupRepositoryInterface $areasGroupRepositoryInterface)
     {
@@ -87,7 +86,7 @@ class AreaGroupController extends Controller
              return ApiResponseClass::sendResponse(new AreaGroupResource($area),'Area Group Update Successful',201);
 
         }catch(\Exception $ex){
-            dd($ex);
+            return ApiResponseClass::rollback($ex);
         }
     }
 

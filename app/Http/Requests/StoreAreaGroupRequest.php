@@ -24,6 +24,7 @@ class StoreAreaGroupRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'regional_id' => 'required',
             'name' => ['required','unique:area_groups'],
             'lat' => 'nullable',
             'long' => 'nullable'
@@ -42,6 +43,7 @@ class StoreAreaGroupRequest extends FormRequest
     public function messages()
     {
         return [
+            'regional_id.required' => 'regional tidak boleh kosong',
             'name.required' => 'nama area tidak boleh kosong',
             'name.unique' => 'area sudah terdaftar',
         ];

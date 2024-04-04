@@ -6,6 +6,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
@@ -24,6 +25,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
 
+
      public static function boot() {
         parent::boot();
         // Auto generate UUID when creating data User
@@ -36,6 +38,12 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'area_id',
+        'address',
+        'nip',
+        'phone',
+        'avatar',
+        'status'
     ];
 
     /**
@@ -59,5 +67,10 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+
+    public function area_groups(): BelongsTo {
+        return $this->belongsTo(AreaGroup::class);
     }
 }

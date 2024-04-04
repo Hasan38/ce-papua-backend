@@ -2,13 +2,12 @@
 
 namespace App\Http\Requests;
 
-use App\Models\AreaGroup;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Validation\Rule;
 
-class UpdateAreaGroupRequest extends FormRequest
+class UpdateRegionalRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -18,19 +17,11 @@ class UpdateAreaGroupRequest extends FormRequest
         return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
-     */
     public function rules(): array
     {
         
         return [
-            'regional_id' => 'required',
-            'name' => ['required', Rule::unique('area_groups','name')->ignore($this->id)],
-            'lat' => 'nullable',
-            'long' => 'nullable'
+            'name' => ['required', Rule::unique('regionals','name')->ignore($this->id)],
         ];
     }
 
@@ -46,10 +37,10 @@ class UpdateAreaGroupRequest extends FormRequest
     public function messages()
     {
         return [
-            'regional_id.required' => 'regional tidak boleh kosong',
-            'name.required' => 'nama area tidak boleh kosong',
-            'name.unique' => 'area sudah terdaftar',
+            'name.required' => 'regional name tidak boleh kosong',
+            'name.unique' => 'regional name sudah terdaftar',
         ];
     }
 
 }
+

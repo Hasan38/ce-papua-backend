@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class AreaGroupResource extends JsonResource
+class RegionalResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,10 +16,7 @@ class AreaGroupResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'regional_id' => $this->regional_id,
             'name' => $this->name,
-            'lat' => $this->whenNotNull($this->lat),
-            'long' => $this->whenNotNull($this->long)
         ];
     }
 }

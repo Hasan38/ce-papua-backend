@@ -16,11 +16,11 @@ return new class extends Migration
             $table->unsignedBigInteger("area_id")->nullable(false);
             $table->string('name');
             $table->string('email')->unique();
-            $table->string("nik")->unique();
+            $table->string("nip")->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->text("address")->nullable();
-            $table->string("phone")->nullable();
+            $table->string("phone")->nullable()->unique();
             $table->string("avatar")->nullable();
             $table->enum("status", [1, 0]);
             $table->rememberToken();

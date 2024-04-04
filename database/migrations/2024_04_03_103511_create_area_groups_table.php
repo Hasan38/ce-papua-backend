@@ -13,10 +13,12 @@ return new class extends Migration
     {
         Schema::create('area_groups', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger("regional_id")->nullable(false);
             $table->string('name', 100)->nullable(false)->unique();
             $table->string('lat', 100)->nullable();
             $table->string('long', 100)->nullable();
             $table->timestamps();
+            $table->foreign("regional_id")->on("regionals")->references("id");
         });
     }
 
