@@ -10,12 +10,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/register',[UserController::class,'store']);
 Route::post('/login',[UserController::class,'login']);
-
+Route::get('/user', function (Request $request) {
+    return $request->user();
+})->middleware('auth:sanctum');
 Route::middleware('auth:sanctum')->group(function () {
 
-    Route::get('/user', function (Request $request) {
-        return $request->user();
-    });
+
 
     Route::get('/area-group',[AreaGroupController::class,'index']);
     Route::get('/area-group-list',[AreaGroupController::class,'list']);
@@ -24,7 +24,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('/area-group/{id}',[AreaGroupController::class,'update'])->where('id','[0-9]+');
     Route::delete('/area-group/{id}',[AreaGroupController::class,'destroy'])->where('id','[0-9]+');
 
-   
+
 
     Route::post('/regional',[RegionalController::class,'store']);
     Route::get('/regional',[RegionalController::class,'index']);
