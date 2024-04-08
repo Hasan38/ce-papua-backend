@@ -71,6 +71,6 @@ class User extends Authenticatable
 
 
     public function area_groups(): BelongsTo {
-        return $this->belongsTo(AreaGroup::class);
+        return $this->belongsTo(AreaGroup::class,'area_id');
     }
 }

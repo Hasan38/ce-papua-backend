@@ -6,6 +6,7 @@ use App\Interfaces\UserRepositoryInterface;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class UserRepository implements UserRepositoryInterface
 {
@@ -14,13 +15,21 @@ class UserRepository implements UserRepositoryInterface
      */
    
     public function index(Request $request){
-        $page = $request->input('_page', 1);
-        $size = $request->input('_limit', 10);
-        return User::paginate(perPage: $size, page: $page);
+        $page = $request->input('page', 1);
+        $size = $request->input('limit', 10);
+
+        $user = User::with('area_groups','area_groups.regionals')->when($request->input('q'), fn ($query, $search) =>
+        $query->where([
+            ['name','like', '%' . $search. '%'],
+            ['nip','like', '%' . $search. '%'],
+            ['email','like', '%' . $search. '%']])
+        )->paginate(perPage: $size, page: $page);
+        return $user;
     }
 
     public function getById($id){
-       return User::findOrFail($id);
+       $user = User::with('area_groups')->where('id',$id)->first();
+       return $user;
     }
 
     public function store(array $data){
@@ -29,13 +38,16 @@ class UserRepository implements UserRepositoryInterface
 
     public function update(array $data,$id){
       $user = User::where('id',$id)->first();
-      
-      $data['password'] = Hash::make($data['password']);
       $user->update($data);
       return $user;
     }
     
     public function delete($id){
        User::destroy($id);
+    }
+
+    public function login(array $data){
+        $user = User::with('area_groups')->where('email',$data['email'])->first();
+        return $user;
     }
 }

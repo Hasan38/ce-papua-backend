@@ -12,7 +12,11 @@ class RegionalRepository implements RegionalRepositoryInterface
     public function index(Request $request){
         $page = $request->input('page', 1);
         $size = $request->input('limit', 10);
-        return Regional::paginate(perPage: $size, page: $page);
+
+        $region = Regional::when($request->input('q'), fn ($query, $search) =>
+        $query->where('name','like', '%' . $search. '%')
+        )->paginate(perPage: $size, page: $page);
+        return $region;
     }
 
     public function getById($id){
@@ -31,5 +35,9 @@ class RegionalRepository implements RegionalRepositoryInterface
     
     public function delete($id){
        Regional::destroy($id);
+    }
+
+    public function list(){
+      return Regional::get();
     }
 }

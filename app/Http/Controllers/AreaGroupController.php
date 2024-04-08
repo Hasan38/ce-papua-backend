@@ -11,6 +11,9 @@ use App\Models\AreaGroup;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
+use function PHPUnit\Framework\isEmpty;
+use function PHPUnit\Framework\isNull;
+
 class AreaGroupController extends Controller
 {
     private AreaGroupRepositoryInterface $areaGroupRepositoryInterface;
@@ -25,7 +28,7 @@ class AreaGroupController extends Controller
      */
     public function index(Request $request) {
         $data = $this->areaGroupRepositoryInterface->index($request);
-        return ApiResponseClass::sendResponse(AreaGroupResource::collection($data),'',200);
+        return ApiResponseClass::sendResponse($data,'',200);
     }
 
     /**
@@ -57,11 +60,14 @@ class AreaGroupController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($id)
+    public function show(int $id)
     {
         $area = $this->areaGroupRepositoryInterface->getById($id);
-
+        if(!$area){
+            return ApiResponseClass::notFound();
+        }
         return ApiResponseClass::sendResponse(new AreaGroupResource($area),'',200);
+        
     }
 
     /**
@@ -93,9 +99,14 @@ class AreaGroupController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function destroy(int $id)
     {
          $this->areaGroupRepositoryInterface->delete($id);
          return ApiResponseClass::sendResponse('Area Group Delete Successful','',204);
+    }
+
+    public function list(){
+        $data = $this->areaGroupRepositoryInterface->list();
+        return ApiResponseClass::sendResponse($data,'',200);
     }
 }

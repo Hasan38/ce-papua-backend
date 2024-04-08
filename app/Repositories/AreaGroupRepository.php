@@ -13,13 +13,21 @@ class AreaGroupRepository implements AreaGroupRepositoryInterface
      */
 
     public function index(Request $request){
+       
         $page = $request->input('page', 1);
         $size = $request->input('limit', 10);
-        return AreaGroup::paginate(perPage: $size, page: $page);
+
+        $area = AreaGroup::with('regionals')->when($request->input('q'), fn ($query, $search) =>
+        $query->where('name','like', '%' . $search. '%')
+        )->paginate(perPage: $size, page: $page);
+        return $area;
+        
     }
 
     public function getById($id){
-       return AreaGroup::findOrFail($id);
+       $area = AreaGroup::where('id' ,$id)->first();
+       return $area;
+       
     }
 
     public function store(array $data){
@@ -34,5 +42,9 @@ class AreaGroupRepository implements AreaGroupRepositoryInterface
     
     public function delete($id){
        AreaGroup::destroy($id);
+    }
+
+    public function list(){
+      return AreaGroup::get();
     }
 }

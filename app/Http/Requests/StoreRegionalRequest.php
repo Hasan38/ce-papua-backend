@@ -27,10 +27,8 @@ class StoreRegionalRequest extends FormRequest
     public function failedValidation(Validator $validator)
     {
         throw new HttpResponseException(response()->json([
-            'success'   => false,
-            'message'   => 'Validation errors',
-            'data'      => $validator->errors()
-        ]));
+            "errors" => $validator->getMessageBag()
+        ], 422));
     }
 
     public function messages()

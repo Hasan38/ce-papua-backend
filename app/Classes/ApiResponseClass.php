@@ -17,6 +17,14 @@ class ApiResponseClass
         throw new HttpResponseException(response()->json(["message"=> $message], 500));
     }
 
+    public static function notFound($message ="Not Found"){
+        throw new HttpResponseException(response()->json(["message"=> $message], 404));
+    }
+
+    public static function Unauthorized($message){
+        throw new HttpResponseException(response()->json(["message"=> $message], 401));
+    }
+
     public static function sendResponse($result , $message ,$code=200){
         $response=[
             'success' => true,

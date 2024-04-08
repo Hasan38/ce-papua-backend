@@ -11,6 +11,13 @@ class StoreUserRequest extends FormRequest
     /**
      * Determine if the user is authorized to make this request.
      */
+
+     public function authorize(): bool
+     {
+         return true;
+     }
+
+     
     public function rules(): array
     {
         return [
@@ -28,10 +35,8 @@ class StoreUserRequest extends FormRequest
     public function failedValidation(Validator $validator)
     {
         throw new HttpResponseException(response()->json([
-            'success'   => false,
-            'message'   => 'Validation errors',
-            'data'      => $validator->errors()
-        ]));
+            "errors" => $validator->getMessageBag()
+        ], 422));
     }
 
     public function messages()

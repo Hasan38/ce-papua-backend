@@ -14,7 +14,7 @@ class AreaGroup extends Model
     protected $fillable=['regional_id','name','lat','long'];
 
     public function regionals(): BelongsTo {
-        return $this->belongsTo(Regional::class);
+        return $this->belongsTo(Regional::class,'regional_id');
     }
 
     public function users(): HasMany {

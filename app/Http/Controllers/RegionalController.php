@@ -21,7 +21,7 @@ class RegionalController extends Controller
 
     public function index(Request $request) {
         $data = $this->regionalRepositoryInterface->index($request);
-        return ApiResponseClass::sendResponse(RegionalResource::collection($data),'',200);
+        return ApiResponseClass::sendResponse($data,'',200);
     }
 
     /**
@@ -93,5 +93,10 @@ class RegionalController extends Controller
     {
          $this->regionalRepositoryInterface->delete($id);
          return ApiResponseClass::sendResponse('Regional Delete Successful','',204);
+    }
+
+    public function list(){
+        $data = $this->regionalRepositoryInterface->list();
+        return ApiResponseClass::sendResponse($data,'',200);
     }
 }
