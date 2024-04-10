@@ -20,4 +20,8 @@ class AreaGroup extends Model
     public function users(): HasMany {
         return $this->hasMany(User::class);
     }
+
+    public function machines(): HasMany {
+        return $this->hasMany(Machine::class);
+    }
 }

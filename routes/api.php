@@ -1,8 +1,11 @@
 <?php
 
 use App\Http\Controllers\AreaGroupController;
+use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\MachineController;
 use App\Http\Controllers\RegionalController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\DashboardController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -10,12 +13,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/register',[UserController::class,'store']);
 Route::post('/login',[UserController::class,'login']);
+
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
+
 Route::middleware('auth:sanctum')->group(function () {
-
-
 
     Route::get('/area-group',[AreaGroupController::class,'index']);
     Route::get('/area-group-list',[AreaGroupController::class,'list']);
@@ -23,8 +26,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/area-group/{id}',[AreaGroupController::class,'show'])->where('id','[0-9]+');
     Route::put('/area-group/{id}',[AreaGroupController::class,'update'])->where('id','[0-9]+');
     Route::delete('/area-group/{id}',[AreaGroupController::class,'destroy'])->where('id','[0-9]+');
-
-
 
     Route::post('/regional',[RegionalController::class,'store']);
     Route::get('/regional',[RegionalController::class,'index']);
@@ -37,4 +38,21 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/users/{id}',[UserController::class,'show']);
     Route::put('/users/{id}',[UserController::class,'update']);
     Route::delete('/users/{id}',[UserController::class,'destroy']);
+
+    Route::post('/customer',[CustomerController::class,'store']);
+    Route::get('/customer',[CustomerController::class,'index']);
+    Route::get('/customer-list',[CustomerController::class,'list']);
+    Route::get('/customer/{id}',[CustomerController::class,'show'])->where('id','[0-9]+');
+    Route::put('/customer/{id}',[CustomerController::class,'update'])->where('id','[0-9]+');
+    Route::delete('/customer/{id}',[CustomerController::class,'destroy'])->where('id','[0-9]+');
+
+    Route::post('/machine',[MachineController::class,'store']);
+    Route::get('/machine',[MachineController::class,'index']);
+    Route::get('/machine-list',[MachineController::class,'list']);
+    Route::get('/machine/{id}',[MachineController::class,'show'])->where('id','[0-9]+');
+    Route::put('/machine/{id}',[MachineController::class,'update'])->where('id','[0-9]+');
+    Route::delete('/machine/{id}',[MachineController::class,'destroy'])->where('id','[0-9]+');
+
+    Route::get('/dashboard',[DashboardController::class,'index']);
+
 });
