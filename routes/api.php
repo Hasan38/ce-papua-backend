@@ -8,14 +8,15 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\DashboardController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
+use App\Models\User;
 
 
 Route::post('/register',[UserController::class,'store']);
 Route::post('/login',[UserController::class,'login']);
 
 Route::get('/user', function (Request $request) {
-    return $request->user();
+    $user = User::with('area_groups')->where('id',$request->user()->id)->first();
+    return $user;
 })->middleware('auth:sanctum');
 
 Route::middleware('auth:sanctum')->group(function () {
