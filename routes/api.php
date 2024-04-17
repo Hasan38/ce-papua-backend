@@ -6,6 +6,8 @@ use App\Http\Controllers\MachineController;
 use App\Http\Controllers\RegionalController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ErrorCodeCeController;
+use App\Http\Controllers\ErrorCodeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Models\User;
@@ -55,5 +57,14 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('/machine/{id}',[MachineController::class,'destroy'])->where('id','[0-9]+');
 
     Route::get('/dashboard',[DashboardController::class,'index']);
+    Route::get('/error_code',[ErrorCodeController::class,'index']);
+
+    Route::post('/error_code_ce',[ErrorCodeCeController::class,'store']);
+    Route::get('/error_code_ce',[ErrorCodeCeController::class,'index']);
+    Route::get('/error_code_ce/{id}',[ErrorCodeCeController::class,'show'])->where('id','[0-9]+');
+    Route::put('/error_code_ce/{id}',[ErrorCodeCeController::class,'update'])->where('id','[0-9]+');
+    Route::delete('/error_code_ce/{id}',[ErrorCodeCeController::class,'destroy'])->where('id','[0-9]+');
 
 });
+Route::get('/error_code_ce',[ErrorCodeCeController::class,'index']);
+
