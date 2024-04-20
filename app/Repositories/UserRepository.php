@@ -18,7 +18,7 @@ class UserRepository implements UserRepositoryInterface
         $page = $request->input('page', 1);
         $size = $request->input('limit', 10);
 
-        $user = User::with('area_groups','area_groups.regionals')->when($request->input('q'), fn ($query, $search) =>
+        $user = User::with('area_groups','area_groups.regionals','roles')->when($request->input('q'), fn ($query, $search) =>
         $query->where([
             ['name','like', '%' . $search. '%'],
             ['nip','like', '%' . $search. '%'],

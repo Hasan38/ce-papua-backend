@@ -9,6 +9,7 @@ use App\Http\Resources\AreaGroupResource;
 use App\Interfaces\AreaGroupRepositoryInterface;
 use App\Models\AreaGroup;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 use function PHPUnit\Framework\isEmpty;
@@ -27,8 +28,10 @@ class AreaGroupController extends Controller
      * Display a listing of the resource.
      */
     public function index(Request $request) {
-        $data = $this->areaGroupRepositoryInterface->index($request);
-        return ApiResponseClass::sendResponse($data,'',200);
+      
+            $data = $this->areaGroupRepositoryInterface->index($request);
+            return ApiResponseClass::sendResponse($data,'',200);
+        
     }
 
     /**

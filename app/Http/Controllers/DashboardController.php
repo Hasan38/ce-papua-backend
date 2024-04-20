@@ -19,4 +19,9 @@ class DashboardController extends Controller
         return ApiResponseClass::sendResponse($data,'',200);
     }
 
+    public function getByZona(Request $request) {
+      $data = $this->dashboardRepositoryInterface->getByZona($request);
+      return ApiResponseClass::sendResponse($data,'',200);
+  }
+
 }

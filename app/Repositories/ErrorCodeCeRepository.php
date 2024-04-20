@@ -10,10 +10,10 @@ class ErrorCodeCeRepository implements ErrorCodeCeRepositoryInterface
 {
     public function index(Request $request){
         $page = $request->input('page', 1);
-        $size = $request->input('limit', 10);
+        $size = $request->input('limit', 5);
 
         $error = ErrorCodeCe::query()
-        ->with('users')->withCount('ratings')->when($request->input('q'), fn ($query, $search) =>
+        ->with('users')->withAvg('ratings', 'nilai')->withCount('ratings')->when($request->input('q'), fn ($query, $search) =>
         $query->where('error_code','like', '%' . $search. '%'))
         ->when($request->input('model'), fn ($query, $search) =>
         $query->where('machine_type','=',  $search))->paginate(perPage: $size, page: $page);
@@ -21,7 +21,11 @@ class ErrorCodeCeRepository implements ErrorCodeCeRepositoryInterface
     }
 
     public function getById($id){
-       return ErrorCodeCe::findOrFail($id);
+      $error = ErrorCodeCe::query()
+      ->with(['users','ratings','ratings.users'])->withAvg('ratings', 'nilai')->withCount('ratings')->where('id',$id)->first();
+    
+      return $error;
+     
     }
 
     public function store(array $data){

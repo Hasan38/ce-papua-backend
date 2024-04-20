@@ -57,7 +57,7 @@ class ErrorCodeCeController extends Controller
     {
         $machine = $this->errorRepositoryInterface->getById($id);
 
-        return ApiResponseClass::sendResponse(new ErrorCodeCeResource($machine),'',200);
+        return ApiResponseClass::sendResponse($machine,'',200);
     }
 
     /**

@@ -13,14 +13,18 @@ class ErrorCodeCe extends Model
 
     protected $fillable = ['user_id','machine_type','error_code','problem_info','action_taken'];
 
-    protected $casts = [
-        'error_code' => 'array'
-        ];
+    protected $casts = ['error_code' => 'array'];
 
     public function users(): BelongsTo {
         return $this->belongsTo(User::class,'user_id');
     }
+
     public function ratings(): HasMany {
-        return $this->hasMany(Rating::class,'id');
+        return $this->hasMany(Rating::class);
+    }
+
+    public function avgRating()
+    {
+        return $this->ratings->avg('nilai') ?? 0;
     }
 }
