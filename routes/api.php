@@ -8,6 +8,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ErrorCodeCeController;
 use App\Http\Controllers\ErrorCodeController;
+use App\Http\Controllers\NoteController;
 use App\Http\Controllers\RatingController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -69,6 +70,11 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::post('/rating',[RatingController::class,'store']);
     Route::delete('/rating/{id}',[RatingController::class,'destroy'])->where('id','[0-9]+');
+
+    Route::post('/note',[NoteController::class,'store']);
+    Route::get('/note',[NoteController::class,'index']);
+    Route::put('/note/{id}',[NoteController::class,'update'])->where('id','[0-9]+');
+    Route::delete('/note/{id}',[NoteController::class,'destroy'])->where('id','[0-9]+');
 
 });
 

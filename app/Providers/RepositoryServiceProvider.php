@@ -9,6 +9,7 @@ use App\Interfaces\RegionalRepositoryInterface;
 use App\Interfaces\UserRepositoryInterface;
 use App\Interfaces\DashboardRepositoryInterface;
 use App\Interfaces\ErrorCodeCeRepositoryInterface;
+use App\Interfaces\NoteRepositoryInterface;
 use App\Interfaces\RatingRepositoryInterface;
 use App\Repositories\AreaGroupRepository;
 use App\Repositories\CustomerRepository;
@@ -17,6 +18,7 @@ use App\Repositories\RegionalRepository;
 use App\Repositories\UserRepository;
 use App\Repositories\DashboardRepository;
 use App\Repositories\ErrorCodeCeRepository;
+use App\Repositories\NoteRepository;
 use App\Repositories\RatingRepository;
 use Illuminate\Support\ServiceProvider;
 
@@ -35,6 +37,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(DashboardRepositoryInterface::class,DashboardRepository::class);
         $this->app->bind(ErrorCodeCeRepositoryInterface::class,ErrorCodeCeRepository::class);
         $this->app->bind(RatingRepositoryInterface::class, RatingRepository::class);
+        $this->app->bind(NoteRepositoryInterface::class, NoteRepository::class);
     }
 
     /**
