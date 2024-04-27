@@ -9,7 +9,9 @@ use App\Http\Resources\MachineResource;
 use App\Interfaces\MachineRepositoryInterface;
 use App\Models\Machine;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class MachineController extends Controller
 {
@@ -74,6 +76,17 @@ class MachineController extends Controller
     public function update(int $id, UpdateMachineRequest $request)
     {
         $updateData = $request->validated();
+        $get = Machine::where('id' ,$id)->first();
+        if(Auth::user()->hasRole('ce')){
+
+            if(!$get || Auth::user()->area_id != $get->area_id){
+                throw new HttpResponseException(response()->json([
+                    "errors" => [
+                        'message' => ['Anda tidak bisa merubah data mesin yg bukan di area anda, silahkan hubungi admin']
+                    ]
+                ], 422));
+            }
+        }
         DB::beginTransaction();
         try{
              $machine= $this->machineRepositoryInterface->update($updateData,$id);
@@ -91,6 +104,17 @@ class MachineController extends Controller
      */
     public function destroy($id)
     {
+        $get = Machine::where('id' ,$id)->first();
+        if(Auth::user()->hasRole('ce')){
+
+            if(!$get || Auth::user()->area_id != $get->area_id){
+                throw new HttpResponseException(response()->json([
+                    "errors" => [
+                        'message' => ['Anda tidak bisa menghapus data mesin yg bukan di area anda, silahkan hubungi admin']
+                    ]
+                ], 422));
+            }
+        }
          $this->machineRepositoryInterface->delete($id);
          return ApiResponseClass::sendResponse('Machine Delete Successful','',204);
     }

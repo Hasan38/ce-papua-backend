@@ -48,6 +48,7 @@ class StoreMachineRequest extends FormRequest
         throw new HttpResponseException(response()->json([
             "errors" => $validator->getMessageBag()
         ], 422));
+
     }
 
     public function messages()
