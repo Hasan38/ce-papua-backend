@@ -47,7 +47,7 @@ class UserRepository implements UserRepositoryInterface
     }
 
     public function login(array $data){
-        $user = User::with('area_groups')->where('email',$data['email'])->first();
+        $user = User::with('area_groups','roles')->where('email',$data['email'])->first();
         return $user;
     }
 }

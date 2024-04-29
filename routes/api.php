@@ -10,6 +10,7 @@ use App\Http\Controllers\ErrorCodeCeController;
 use App\Http\Controllers\ErrorCodeController;
 use App\Http\Controllers\NoteController;
 use App\Http\Controllers\RatingController;
+use App\Http\Controllers\TutorialController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Models\User;
@@ -19,7 +20,7 @@ Route::post('/register',[UserController::class,'store']);
 Route::post('/login',[UserController::class,'login']);
 
 Route::get('/user', function (Request $request) {
-    $user = User::with('area_groups')->where('id',$request->user()->id)->first();
+    $user = User::with('area_groups','roles')->where('id',$request->user()->id)->first();
     return $user;
 })->middleware('auth:sanctum');
 
@@ -75,6 +76,12 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/note',[NoteController::class,'index']);
     Route::put('/note/{id}',[NoteController::class,'update'])->where('id','[0-9]+');
     Route::delete('/note/{id}',[NoteController::class,'destroy'])->where('id','[0-9]+');
+
+    Route::post('/tutorial',[TutorialController::class,'store']);
+    Route::get('/tutorial',[TutorialController::class,'index']);
+    Route::get('/tutorial/{id}',[TutorialController::class,'show'])->where('id','[0-9]+');
+    Route::put('/tutorial/{id}',[TutorialController::class,'update'])->where('id','[0-9]+');
+    Route::delete('/tutorial/{id}',[TutorialController::class,'destroy'])->where('id','[0-9]+');
 
 });
 

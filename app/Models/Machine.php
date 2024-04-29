@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Machine extends Model
 {
@@ -23,5 +23,9 @@ class Machine extends Model
 
     public function area_groups():BelongsTo {
         return $this->belongsTo(AreaGroup::class, 'area_id');
+    }
+
+    public function notes() : HasMany {
+        return $this->hasMany(Note::class);
     }
 }

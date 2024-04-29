@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Interfaces\NoteRepositoryInterface;
+use App\Models\Machine;
 use App\Models\Note;
 use Illuminate\Http\Request;
 
@@ -11,9 +12,11 @@ class NoteRepository implements NoteRepositoryInterface
     public function index(Request $request){
 
 
-        $note = Note::when($request->input('q'), fn ($query, $search) =>
-        $query->where('name','like', '%' . $search. '%')
-        )->where('id',$request->input('id'))->get();
+        $note = Machine::with('notes.users')->when($request->input('q'), fn ($query, $search) =>
+        $query ->whereHas('notes', function($q) use ($search) {
+         $q->where('title', 'like', '%' . $search . '%');
+         })
+        )->find($request->input('id'));
         return $note;
     }
 

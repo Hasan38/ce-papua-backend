@@ -11,6 +11,7 @@ use App\Interfaces\DashboardRepositoryInterface;
 use App\Interfaces\ErrorCodeCeRepositoryInterface;
 use App\Interfaces\NoteRepositoryInterface;
 use App\Interfaces\RatingRepositoryInterface;
+use App\Interfaces\TutorialRepositoryInterface;
 use App\Repositories\AreaGroupRepository;
 use App\Repositories\CustomerRepository;
 use App\Repositories\MachineRepository;
@@ -20,6 +21,7 @@ use App\Repositories\DashboardRepository;
 use App\Repositories\ErrorCodeCeRepository;
 use App\Repositories\NoteRepository;
 use App\Repositories\RatingRepository;
+use App\Repositories\TutorialRepository;
 use Illuminate\Support\ServiceProvider;
 
 class RepositoryServiceProvider extends ServiceProvider
@@ -38,6 +40,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(ErrorCodeCeRepositoryInterface::class,ErrorCodeCeRepository::class);
         $this->app->bind(RatingRepositoryInterface::class, RatingRepository::class);
         $this->app->bind(NoteRepositoryInterface::class, NoteRepository::class);
+        $this->app->bind(TutorialRepositoryInterface::class, TutorialRepository::class);
     }
 
     /**
