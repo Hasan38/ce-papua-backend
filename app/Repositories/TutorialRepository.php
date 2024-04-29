@@ -12,11 +12,11 @@ class TutorialRepository implements TutorialRepositoryInterface
     public function index(Request $request){
         $page = $request->input('page', 1);
         $size = $request->input('limit', 10);
-
+        $type = $request->input('type');
         $tutor = Tutorial::with('users')->when($request->input('q'), fn ($query, $search) =>
                 $query->where('title', 'like', '%' . $search . '%')
                 ->orWhere('content', 'like', '%' . $search . '%')
-        )->paginate(perPage: $size, page: $page);
+        )->where('type', $type)->paginate(perPage: $size, page: $page);
         return $tutor;
     }
 
