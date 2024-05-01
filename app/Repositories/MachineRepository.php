@@ -14,14 +14,14 @@ class MachineRepository implements  MachineRepositoryInterface {
         $page = $request->input('page', 1);
         $size = $request->input('limit', 10);
       if(Auth::user()->hasRole('ce')){
-         $machine = Machine::with('area_groups','customers')->when($request->input('q'), fn ($query, $search) =>
+         $machine = Machine::with('area_groups','customers')->withCount('notes')->when($request->input('q'), fn ($query, $search) =>
          $query->where('terminal_id','like', '%' . $search. '%')
          ->orWhere('sn','like', '%' . $search. '%')
          ->orWhere('customer_type','like', '%' . $search. '%')
          ->orWhere('branch','like', '%' . $search. '%'))->where('area_id',Auth::user()->area_id)->paginate(perPage: $size, page: $page);
          return $machine;
       }
-        $machine = Machine::with('area_groups','customers')->when($request->input('q'), fn ($query, $search) =>
+        $machine = Machine::with('area_groups','customers')->withCount('notes')->when($request->input('q'), fn ($query, $search) =>
         $query->where('terminal_id','like', '%' . $search. '%')
         ->orWhere('sn','like', '%' . $search. '%')
         ->orWhere('customer_type','like', '%' . $search. '%')
