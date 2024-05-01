@@ -5,8 +5,7 @@ namespace App\Repositories;
 use App\Interfaces\UserRepositoryInterface;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Support\Facades\Auth;
 
 class UserRepository implements UserRepositoryInterface
 {
@@ -47,7 +46,15 @@ class UserRepository implements UserRepositoryInterface
     }
 
     public function login(array $data){
-        $user = User::with('area_groups','roles')->where('email',$data['email'])->first();
+        $user = User::with(['area_groups','roles'])->where('email',$data['email'])->first();
         return $user;
     }
+
+    public function logout() {
+        $user = Auth::user();
+        $user->currentAccessToken()->delete();
+
+        return $user;
+    }
+
 }

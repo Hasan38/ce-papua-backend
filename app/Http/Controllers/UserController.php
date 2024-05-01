@@ -49,7 +49,9 @@ class UserController extends Controller
             return ApiResponseClass::Unauthorized('email or password wrong');
         }       
         $token = $auth->createToken('ce-app')->plainTextToken;
+        
         $datas = [
+            'id' => $auth->id,
             'name' => $auth->name,
             'email' => $auth->email,
             'nip' =>$auth->nip,
@@ -57,7 +59,10 @@ class UserController extends Controller
             'phone' => $auth->phone,
             'token' => $token,
             'area_id' => $auth->area_groups->id,
-            'area_name' => $auth->area_groups->name
+            'area_name' => $auth->area_groups->name,
+            'avatar' => $auth->avatar,
+            'status' => $auth->status,
+            'roles' => $auth->roles
         ];
            
         return ApiResponseClass::sendResponse($datas, 'Login Successful',201);
@@ -102,6 +107,11 @@ class UserController extends Controller
     {
          $this->userRepositoryInterface->delete($id);
          return ApiResponseClass::sendResponse('User Delete Successful','',204);
+    }
+
+    public function logout(){
+        $this->userRepositoryInterface->logout();
+        return ApiResponseClass::sendResponse('Logout','',200);
     }
     
 }

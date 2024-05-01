@@ -12,4 +12,5 @@ interface UserRepositoryInterface
     public function update(array $data,$id);
     public function delete($id);
     public function login(array $data);
+    public function logout();
 }

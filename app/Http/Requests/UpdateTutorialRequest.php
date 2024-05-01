@@ -26,7 +26,7 @@ class UpdateTutorialRequest extends FormRequest
         return [
             'user_id' => 'required',
             'machine_type' => 'required',
-            'customer' => 'nullable',
+            'customer' => 'required',
             'type' => 'required',
             'title' => ['required','max:255','min:5'],
             'content' => 'nullable',
@@ -45,7 +45,8 @@ class UpdateTutorialRequest extends FormRequest
     {
         return [
             'user_id.required' => 'user tidak diketahui',
-            'machine_type' => 'masukan type mesin',
+            'machine_type.required' => 'masukan type mesin',
+            'customer.required' => 'Pilih none jika tidak ada',
             'title.required' => 'judul tidak boleh kosong',
             'title.min' => 'title/judul min 5 karakter',
             'title.max' => 'title/judul max 255 karakter',

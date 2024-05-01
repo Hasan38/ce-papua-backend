@@ -11,7 +11,7 @@ class TutorialRepository implements TutorialRepositoryInterface
     
     public function index(Request $request){
         $page = $request->input('page', 1);
-        $size = $request->input('limit', 10);
+        $size = $request->input('limit', 8);
         $type = $request->input('type');
         $tutor = Tutorial::with('users')->when($request->input('q'), fn ($query, $search) =>
                 $query->where('title', 'like', '%' . $search . '%')
@@ -28,7 +28,7 @@ class TutorialRepository implements TutorialRepositoryInterface
         return Tutorial::with('users')->findOrFail($id);
      }
 
-    public function update(array $data,$id){
+    public function update(array $data, $id){
        $get = Tutorial::where('id' ,$id)->first();
        $get->update($data);
        return $get;

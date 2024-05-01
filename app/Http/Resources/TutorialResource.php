@@ -17,6 +17,7 @@ class TutorialResource extends JsonResource
         return [
             'id' => $this->id,
             'machine_type' => $this->machine_type,
+            'type' => $this->type,
             'user_id' => $this->user_id,
             'customer' => $this->whenNotNull($this->customer),
             'title' =>$this->title,
