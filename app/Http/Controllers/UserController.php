@@ -82,7 +82,8 @@ class UserController extends Controller
             'address' => $auth->address,
             'phone' => $auth->phone,
             'area_id' => $auth->area_groups->id,
-            'area_name' => $auth->area_groups->name
+            'area_name' => $auth->area_groups->name,
+            'roles' => $auth->roles
         ];
         return ApiResponseClass::sendResponse(new UserResource($datas),'',201);
         

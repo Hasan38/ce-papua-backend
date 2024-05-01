@@ -6,7 +6,6 @@ use App\Interfaces\MachineRepositoryInterface;
 use App\Models\Machine;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\Exceptions\HttpResponseException;
 
 class MachineRepository implements  MachineRepositoryInterface {
 

@@ -16,12 +16,25 @@ use Illuminate\Support\Facades\Route;
 use App\Models\User;
 
 
-Route::post('/register',[UserController::class,'store']);
+
 Route::post('/login',[UserController::class,'login']);
 
 Route::get('/user', function (Request $request) {
     $user = User::with('area_groups','roles')->where('id',$request->user()->id)->first();
-    return $user;
+    $datas = [
+        'id' => $user->id,
+        'name' => $user->name,
+        'email' => $user->email,
+        'nip' =>$user->nip,
+        'address' => $user->address,
+        'phone' => $user->phone,
+        'area_id' => $user->area_groups->id,
+        'area_name' => $user->area_groups->name,
+        'avatar' => $user->avatar,
+        'status' => $user->status,
+        'roles' => $user->roles
+    ];
+    return $datas;
 })->middleware('auth:sanctum');
 
 Route::middleware('auth:sanctum')->group(function () {
@@ -45,6 +58,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('/users/{id}',[UserController::class,'update']);
     Route::delete('/users/{id}',[UserController::class,'destroy']);
     Route::post('/users/logout',[UserController::class,'logout']);
+    Route::post('/register',[UserController::class,'store']);
 
     Route::post('/customer',[CustomerController::class,'store']);
     Route::get('/customer',[CustomerController::class,'index']);
@@ -83,6 +97,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/tutorial/{id}',[TutorialController::class,'show'])->where('id','[0-9]+');
     Route::put('/tutorial/{id}',[TutorialController::class,'update'])->where('id','[0-9]+');
     Route::delete('/tutorial/{id}',[TutorialController::class,'destroy'])->where('id','[0-9]+');
+
+   
 
 });
 

@@ -27,7 +27,7 @@ class UserRepository implements UserRepositoryInterface
     }
 
     public function getById($id){
-       $user = User::with('area_groups')->where('id',$id)->first();
+       $user = User::with('area_groups','roles')->where('id',$id)->first();
        return $user;
     }
 
@@ -37,6 +37,7 @@ class UserRepository implements UserRepositoryInterface
 
     public function update(array $data,$id){
       $user = User::where('id',$id)->first();
+      $user->assignRole($data['roles']);
       $user->update($data);
       return $user;
     }
