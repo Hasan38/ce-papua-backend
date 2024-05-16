@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\AreaGroupController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\MachineController;
@@ -98,7 +99,13 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('/tutorial/{id}',[TutorialController::class,'update'])->where('id','[0-9]+');
     Route::delete('/tutorial/{id}',[TutorialController::class,'destroy'])->where('id','[0-9]+');
 
-   
+
+    Route::post('/activity',[ActivityController::class,'store']);
+    Route::get('/activity',[ActivityController::class,'index']);
+    Route::get('/activity/{id}',[ActivityController::class,'show'])->where('id','[0-9]+');
+    Route::put('/activity/{id}',[ActivityController::class,'update'])->where('id','[0-9]+');
+    Route::delete('/activity/{id}',[ActivityController::class,'destroy'])->where('id','[0-9]+');
+    Route::get('/activity/list-machine',[ActivityController::class,'getMachine']);
 
 });
 

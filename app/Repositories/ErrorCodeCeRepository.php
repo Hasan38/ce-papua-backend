@@ -10,7 +10,7 @@ class ErrorCodeCeRepository implements ErrorCodeCeRepositoryInterface
 {
     public function index(Request $request){
         $page = $request->input('page', 1);
-        $size = $request->input('limit', 5);
+        $size = $request->input('limit', 10);
 
         $error = ErrorCodeCe::query()
         ->with('users')->withAvg('ratings', 'nilai')->withCount('ratings')->when($request->input('q'), fn ($query, $search) =>
